@@ -4,15 +4,17 @@ import math
 from heapq import heappush, heappop
 from datetime import datetime as dt
 
+from sklearn import neighbors
+
 puzzle =8
 mat_dim= int(math.sqrt(puzzle+1))
 
-initial = [0, 7, 2, 4, 6, 1, 3, 5, 8]
+initial = [1,3,6,5,0,7,4,7,2]
 final = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
 
 #search for blank tile
 ucs_cost= 1 #for effort moving it in any direction
-type= "misplaced" #manhattan, UCS
+type= "manhattan" #manhattan, UCS
 
 print("testing...")
 limit=80000
@@ -60,6 +62,21 @@ def get_neighbours(index):
         print(f"neighbour_list when blank index is at {index}: is {neighbour_list}")
     return neighbour_list
 
+def bfs(state, queue, org_pos, visited):
+    h_n=0
+    while queue:
+        pop_element= queue.pop()
+        visited.append(visited)
+        neighbors= get_neighbours(pop_element[0])
+        for n in neighbors:
+            if n==org_pos:
+                return h_n
+            if n not in visited:
+                queue.insert(0, (n, pop_element[1]+1))
+    
+    print("Empty Queue!.. Investigate...")
+    
+
 def cal_h_n(state, type="UCS"):
     if type=="UCS": #do lower cast
         return 0
@@ -71,11 +88,27 @@ def cal_h_n(state, type="UCS"):
                 h_n+=1
         return h_n
     elif type=="manhattan":
-        h_n=0
+        tot_h_n=0
+        out_of_place_list=[]
         for i,x in enumerate(final):
-            #find minimum distance out of all dist calculation #DP?
-            h_n+=1
-        return None
+            if x!=state[i] and state[i]!=0:
+                out_of_place_list.append(state[i])
+        
+        if debug:
+            print("Manhattan h_n cal... ")
+        for x in out_of_place_list:
+            queue= []
+            #BFS
+            #insert to queue (x, cost) -> pop with its path cosst
+            org_pos= final.index(x)
+            curr_pos= state.index(x)
+            visited=[]
+            queue=[(curr_pos, 0)]
+            tot_h_n+= bfs(state, queue, org_pos, visited)
+        
+        return tot_h_n
+            
+    return None
 
 #heapify the state
 def render_state(initial):
@@ -114,7 +147,7 @@ def render_state(initial):
         blank_index= popped_node.state.index(0)
         neighbour_list= get_neighbours(blank_index)
 
-        curr_state_list=next_move(neighbour_list, popped_node.state, [0,1,2], blank_index)
+        curr_state_list=next_move(neighbour_list, popped_node.state, blank_index)
         for node in curr_state_list:
             if node==final:
                 print(f"Sucess! at depth: {popped_node.g_n+1}")
@@ -143,7 +176,7 @@ def render_state(initial):
     return 
     
 
-def next_move(neighbour_list, old_state, wrng_mov_idxs, blank_index):
+def next_move(neighbour_list, old_state, blank_index):
     curr_state_list= []
     for idx in neighbour_list:
         curr_state= old_state.copy()
