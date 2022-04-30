@@ -6,16 +6,16 @@ from datetime import datetime as dt
 puzzle =8
 mat_dim= int(math.sqrt(puzzle+1))
 
-initial = [7, 1, 2, 4, 8, 5, 6, 3, 0]
+initial = [0, 7, 2, 4, 6, 1, 3, 5, 8]
 
 final = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
-#check for no repating numbers
+
 #search for blank tile
 ucs_cost= 1 #for effort moving it in any direction
 
 print("testing...")
-limit=50000
-debug=True
+limit=80000
+debug=False
 display_puzzle_flag= True
 hist_state=[]
 
@@ -44,11 +44,11 @@ class Node():
 
 def get_neighbours(index):
     if debug:
-        print(f"get neigbours called... for blank's {index}")
+        print(f"get neigbours called... for blank's index at {index}")
     neighbour_list=[]
     if index+mat_dim <=puzzle:
         neighbour_list.append(int(index+mat_dim))
-    if index-mat_dim <=puzzle and index-mat_dim>0:
+    if index-mat_dim <=puzzle and index-mat_dim>=0:
         neighbour_list.append(int(index-mat_dim))
     if index+1 <=puzzle and (abs(((index+1)%mat_dim)-((index)%mat_dim)) != mat_dim-1): #for boundary condition mod operator
         neighbour_list.append(int(index+1))
@@ -68,7 +68,7 @@ def render_state(initial):
         return "0 moves, Success!"
     
     old_state= Node(initial, 0, 0, 0)
-    hist_state.append(old_state)
+    hist_state.append(initial)
     heappush(heap_min, (old_state.f_n, old_state)) #sort by minimum f_n
 
     while heap_min:
@@ -135,6 +135,8 @@ def next_move(neighbour_list, old_state, wrng_mov_idxs, blank_index):
             hist_state.append(curr_state)
             if debug:    
                 print("pushed curr_state: ", curr_state)
+                if display_puzzle_flag:
+                    display_puzzle(curr_state)
 
     return curr_state_list
     
