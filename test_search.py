@@ -9,15 +9,17 @@ from sklearn import neighbors
 puzzle =8
 mat_dim= int(math.sqrt(puzzle+1))
 
-initial = [1,3,6,5,0,7,4,7,2]
+initial = [0,7,2,4,6,1,3,5,8]
 final = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
 
 #search for blank tile
 ucs_cost= 1 #for effort moving it in any direction
 type= "manhattan" #manhattan, UCS
+#check for unsvolvale ?
+
 
 print("testing...")
-limit=80000
+limit=1000
 debug=False
 display_puzzle_flag= True
 hist_state=[]
@@ -46,8 +48,8 @@ class Node():
     
 
 def get_neighbours(index):
-    if debug:
-        print(f"get neigbours called... for blank's index at {index}")
+    #if debug:
+    #    print(f"get neigbours called... for element index at {index}")
     neighbour_list=[]
     if index+mat_dim <=puzzle:
         neighbour_list.append(int(index+mat_dim))
@@ -55,7 +57,7 @@ def get_neighbours(index):
         neighbour_list.append(int(index-mat_dim))
     if index+1 <=puzzle and (abs(((index+1)%mat_dim)-((index)%mat_dim)) != mat_dim-1): #for boundary condition mod operator
         neighbour_list.append(int(index+1))
-    if index-1 <=puzzle and index-1>0 and (abs(((index-1)%mat_dim)-((index)%mat_dim)) != mat_dim-1):
+    if index-1 <=puzzle and index-1>=0 and (abs(((index-1)%mat_dim)-((index)%mat_dim)) != mat_dim-1):
         neighbour_list.append(int(index-1))
     
     if debug:
@@ -63,14 +65,16 @@ def get_neighbours(index):
     return neighbour_list
 
 def bfs(state, queue, org_pos, visited):
-    h_n=0
     while queue:
         pop_element= queue.pop()
         visited.append(visited)
+        if debug:
+            print("Calling neigbours for index: ", pop_element[0])
+        
         neighbors= get_neighbours(pop_element[0])
         for n in neighbors:
             if n==org_pos:
-                return h_n
+                return pop_element[1]+1
             if n not in visited:
                 queue.insert(0, (n, pop_element[1]+1))
     
@@ -96,6 +100,9 @@ def cal_h_n(state, type="UCS"):
         
         if debug:
             print("Manhattan h_n cal... ")
+            print("out_of_place_list: ", out_of_place_list)
+            display_puzzle(state)
+
         for x in out_of_place_list:
             queue= []
             #BFS
@@ -105,7 +112,11 @@ def cal_h_n(state, type="UCS"):
             visited=[]
             queue=[(curr_pos, 0)]
             tot_h_n+= bfs(state, queue, org_pos, visited)
+            #print("h_n: ", tot_h_n)
         
+        if debug:
+            print("Final tot_h_n: ", tot_h_n)
+
         return tot_h_n
             
     return None
