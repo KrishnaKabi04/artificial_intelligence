@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 import math
 from heapq import heappush, heappop
 from datetime import datetime as dt
@@ -7,11 +8,11 @@ puzzle =8
 mat_dim= int(math.sqrt(puzzle+1))
 
 initial = [0, 7, 2, 4, 6, 1, 3, 5, 8]
-
 final = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
 
 #search for blank tile
 ucs_cost= 1 #for effort moving it in any direction
+type= "misplaced" #manhattan, UCS
 
 print("testing...")
 limit=80000
@@ -59,15 +60,33 @@ def get_neighbours(index):
         print(f"neighbour_list when blank index is at {index}: is {neighbour_list}")
     return neighbour_list
 
+def cal_h_n(state, type="UCS"):
+    if type=="UCS": #do lower cast
+        return 0
+    elif type== "misplaced":
+        #compare with final state
+        h_n=0
+        for i,x in enumerate(final):
+            if x!=state[i] and state[i]!=0:
+                h_n+=1
+        return h_n
+    elif type=="manhattan":
+        h_n=0
+        for i,x in enumerate(final):
+            #find minimum distance out of all dist calculation #DP?
+            h_n+=1
+        return None
 
 #heapify the state
 def render_state(initial):
     expanded_nodes=0
     heap_min=[]
     if initial==final:
-        return "0 moves, Success!"
+        print("Success! at depth: 0")
+        return 
     
-    old_state= Node(initial, 0, 0, 0)
+    h_n= cal_h_n(initial, type)
+    old_state= Node(initial, 0, 0, h_n)
     hist_state.append(initial)
     heappush(heap_min, (old_state.f_n, old_state)) #sort by minimum f_n
 
@@ -103,7 +122,9 @@ def render_state(initial):
                 end_time=dt.now()
                 print(f"Time elapsed: {(end_time-strt_time)}")
                 return 
-            curr_state=  Node(node, popped_node, popped_node.g_n+1, 0)
+            
+            h_n= cal_h_n(node, type)
+            curr_state=  Node(node, popped_node, popped_node.g_n+1, h_n)
 
             if debug:
                 print("curr_state: ", curr_state.state, curr_state.f_n)
