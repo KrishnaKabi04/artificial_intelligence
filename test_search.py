@@ -3,23 +3,25 @@ import sys
 import math
 from heapq import heappush, heappop
 from datetime import datetime as dt
+from configparser import ConfigParser
 
-from sklearn import neighbors
 
-puzzle =8
+
+
+initial = [1,5,2,4,8,7,6,3,0]
+final = [1,2,3,4,5,6,7,8,0]
+
+puzzle= len(final)-1
 mat_dim= int(math.sqrt(puzzle+1))
 
-initial = [0,7,2,4,6,1,3,5,8]
-final = [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
-
 #search for blank tile
-ucs_cost= 1 #for effort moving it in any direction
-type= "manhattan" #manhattan, UCS
+type= "hill" #manhattan, UCS, misplaced, hill-climbing(g(n) =0, h_n)
 #check for unsvolvale ?
-
+# Largest size of queue was 18
+#make depth and pathcost different
 
 print("testing...")
-limit=1000
+limit=5000
 debug=False
 display_puzzle_flag= True
 hist_state=[]
@@ -51,25 +53,25 @@ def get_neighbours(index):
     #if debug:
     #    print(f"get neigbours called... for element index at {index}")
     neighbour_list=[]
-    if index+mat_dim <=puzzle:
-        neighbour_list.append(int(index+mat_dim))
-    if index-mat_dim <=puzzle and index-mat_dim>=0:
-        neighbour_list.append(int(index-mat_dim))
     if index+1 <=puzzle and (abs(((index+1)%mat_dim)-((index)%mat_dim)) != mat_dim-1): #for boundary condition mod operator
         neighbour_list.append(int(index+1))
     if index-1 <=puzzle and index-1>=0 and (abs(((index-1)%mat_dim)-((index)%mat_dim)) != mat_dim-1):
         neighbour_list.append(int(index-1))
-    
+    if index+mat_dim <=puzzle:
+        neighbour_list.append(int(index+mat_dim))
+    if index-mat_dim <=puzzle and index-mat_dim>=0:
+        neighbour_list.append(int(index-mat_dim))
+
     if debug:
-        print(f"neighbour_list when blank index is at {index}: is {neighbour_list}")
+        print(f"neighbour_list when target index is at {index}: is {neighbour_list}")
     return neighbour_list
 
 def bfs(state, queue, org_pos, visited):
     while queue:
         pop_element= queue.pop()
         visited.append(visited)
-        if debug:
-            print("Calling neigbours for index: ", pop_element[0])
+        #if debug:
+        #    print("Calling neigbours for index: ", pop_element[0])
         
         neighbors= get_neighbours(pop_element[0])
         for n in neighbors:
@@ -91,17 +93,17 @@ def cal_h_n(state, type="UCS"):
             if x!=state[i] and state[i]!=0:
                 h_n+=1
         return h_n
-    elif type=="manhattan":
+    elif type=="manhattan" or type=="hill":
         tot_h_n=0
         out_of_place_list=[]
         for i,x in enumerate(final):
             if x!=state[i] and state[i]!=0:
                 out_of_place_list.append(state[i])
         
-        if debug:
-            print("Manhattan h_n cal... ")
-            print("out_of_place_list: ", out_of_place_list)
-            display_puzzle(state)
+        #if debug:
+        #    print("Manhattan h_n cal... ")
+        #    print("out_of_place_list: ", out_of_place_list)
+        #    display_puzzle(state)
 
         for x in out_of_place_list:
             queue= []
@@ -118,6 +120,7 @@ def cal_h_n(state, type="UCS"):
             print("Final tot_h_n: ", tot_h_n)
 
         return tot_h_n
+    
             
     return None
 
@@ -133,8 +136,10 @@ def render_state(initial):
     old_state= Node(initial, 0, 0, h_n)
     hist_state.append(initial)
     heappush(heap_min, (old_state.f_n, old_state)) #sort by minimum f_n
+    largest_size= 0
 
     while heap_min:
+        largest_size= max(largest_size, len(heap_min))
         min_cost, popped_node= heappop(heap_min)
         #if popped_node.g_n ==21:
         #    print("Exiting... at depth 21")
@@ -144,6 +149,7 @@ def render_state(initial):
         expanded_nodes+=1
         if expanded_nodes==limit:
             print("mean hip length: ", len(heap_min))
+            print("expanded_nodes: ", expanded_nodes)
             print(f"limit of {limit} reached! investigate ! Exiting...")
             end_time=dt.now()
             print(f"Time elapsed: {(end_time-strt_time).seconds}")
@@ -163,6 +169,7 @@ def render_state(initial):
             if node==final:
                 print(f"Sucess! at depth: {popped_node.g_n+1}")
                 print("Expanded_nodes: ", expanded_nodes)
+                print("Largest size of queue was: ", largest_size)
                 end_time=dt.now()
                 print(f"Time elapsed: {(end_time-strt_time)}")
                 return 
