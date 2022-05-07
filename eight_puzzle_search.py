@@ -8,23 +8,27 @@ from configparser import ConfigParser
 
 
 
-initial = [1,5,2,4,8,7,6,3,0]
+initial = [1,2,3,4,5,6,8,7,0]
 final = [1,2,3,4,5,6,7,8,0]
 
 puzzle= len(final)-1
 mat_dim= int(math.sqrt(puzzle+1))
 
 #search for blank tile
-type= "hill" #manhattan, UCS, misplaced, hill-climbing(g(n) =0, h_n)
+type= "manhattan" #manhattan, UCS, misplaced, hill-climbing(g(n) =0, h_n)
+print(f"Initiating {type} search...")
 #check for unsvolvale ?
 # Largest size of queue was 18
 #make depth and pathcost different
 
 print("testing...")
-limit=5000
+limit=362880 #362880
 debug=False
 display_puzzle_flag= True
 hist_state=[]
+
+strt_time= dt.now()
+
 
 def display_puzzle(curr_state):
     print("----------- Puzzle ----------")
@@ -34,12 +38,12 @@ def display_puzzle(curr_state):
     print("\n")
     return
 
-strt_time= dt.now()
 
 class Node():
-    def __init__(self, state, former, path_cost, h_n):
+    def __init__(self, state, former, depth, path_cost, h_n):
         self.state= state
         self.former= former
+        self.depth= depth
         self.g_n= path_cost
         self.h_n= h_n
         self.f_n= self.g_n+self.h_n
@@ -68,8 +72,11 @@ def get_neighbours(index):
 
 def bfs(state, queue, org_pos, visited):
     while queue:
+        #print("queue: ", queue)
+
         pop_element= queue.pop()
-        visited.append(visited)
+        #print("bfs: ", pop_element[0])
+        visited.append(pop_element[0])
         #if debug:
         #    print("Calling neigbours for index: ", pop_element[0])
         
@@ -79,7 +86,8 @@ def bfs(state, queue, org_pos, visited):
                 return pop_element[1]+1
             if n not in visited:
                 queue.insert(0, (n, pop_element[1]+1))
-    
+
+        #exit()
     print("Empty Queue!.. Investigate...")
     
 
@@ -100,10 +108,10 @@ def cal_h_n(state, type="UCS"):
             if x!=state[i] and state[i]!=0:
                 out_of_place_list.append(state[i])
         
-        #if debug:
-        #    print("Manhattan h_n cal... ")
-        #    print("out_of_place_list: ", out_of_place_list)
-        #    display_puzzle(state)
+        if debug:
+            print("Manhattan h_n cal... ")
+            print("out_of_place_list: ", out_of_place_list)
+            #display_puzzle(state)
 
         for x in out_of_place_list:
             queue= []
@@ -113,6 +121,9 @@ def cal_h_n(state, type="UCS"):
             curr_pos= state.index(x)
             visited=[]
             queue=[(curr_pos, 0)]
+            
+            if debug:
+                print(f"calling bfs for element: {x} at index: {curr_pos}")
             tot_h_n+= bfs(state, queue, org_pos, visited)
             #print("h_n: ", tot_h_n)
         
@@ -121,22 +132,23 @@ def cal_h_n(state, type="UCS"):
 
         return tot_h_n
     
-            
+    print("returing None in h_n")
     return None
 
 #heapify the state
 def render_state(initial):
     expanded_nodes=0
     heap_min=[]
+
     if initial==final:
         print("Success! at depth: 0")
         return 
     
     h_n= cal_h_n(initial, type)
-    old_state= Node(initial, 0, 0, h_n)
+    old_state= Node(initial, 0, 0, 0, h_n)
     hist_state.append(initial)
     heappush(heap_min, (old_state.f_n, old_state)) #sort by minimum f_n
-    largest_size= 0
+    largest_size= 1
 
     while heap_min:
         largest_size= max(largest_size, len(heap_min))
@@ -147,6 +159,9 @@ def render_state(initial):
         #    exit()
 
         expanded_nodes+=1
+        if expanded_nodes%1000 ==1:
+            print("expanded_nodes: ", expanded_nodes)
+
         if expanded_nodes==limit:
             print("mean hip length: ", len(heap_min))
             print("expanded_nodes: ", expanded_nodes)
@@ -156,6 +171,7 @@ def render_state(initial):
             return
 
         if debug:
+            print("expanded_nodes: ", expanded_nodes)
             print("popped_node: ", popped_node.state, " cost: ", popped_node.f_n)
             print("len heap_min: ", len(heap_min))
             if display_puzzle_flag:
@@ -167,7 +183,7 @@ def render_state(initial):
         curr_state_list=next_move(neighbour_list, popped_node.state, blank_index)
         for node in curr_state_list:
             if node==final:
-                print(f"Sucess! at depth: {popped_node.g_n+1}")
+                print(f"Sucess! at depth: {popped_node.depth+1}")
                 print("Expanded_nodes: ", expanded_nodes)
                 print("Largest size of queue was: ", largest_size)
                 end_time=dt.now()
@@ -175,7 +191,10 @@ def render_state(initial):
                 return 
             
             h_n= cal_h_n(node, type)
-            curr_state=  Node(node, popped_node, popped_node.g_n+1, h_n)
+            if type=="hill":
+                curr_state=  Node(node, popped_node, popped_node.depth+1, 0 ,h_n)
+            else:
+                curr_state=  Node(node, popped_node, popped_node.depth+1, popped_node.g_n+1 ,h_n)
 
             if debug:
                 print("curr_state: ", curr_state.state, curr_state.f_n)
@@ -211,5 +230,5 @@ def next_move(neighbour_list, old_state, blank_index):
                     display_puzzle(curr_state)
 
     return curr_state_list
-    
+
 render_state(initial)
