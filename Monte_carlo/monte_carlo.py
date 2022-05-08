@@ -7,8 +7,6 @@ from matplotlib import pyplot as plt
 days_lived=10
 host_loc= [0,250]
 mosquito_radius= 50
-host_found=0
-host_notfound=0
 runs_list=[10, 100, 1000, 10000, 50000, 80000, 100000]
 initial_state= [0,0]
 
@@ -61,6 +59,8 @@ def run_simulation(host_found, die_outside, n_runs):
 
 for n_runs in runs_list:
     die_outside=0
+    host_found=0 
+
     runs,host_found, die_outside= run_simulation(host_found, die_outside, n_runs)
 
     print("runs: ", runs+1)
