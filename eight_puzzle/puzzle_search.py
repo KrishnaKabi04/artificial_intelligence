@@ -1,5 +1,3 @@
-import numpy as np
-import sys
 import math
 from heapq import heappush, heappop
 from datetime import datetime as dt
@@ -12,7 +10,6 @@ class PuzzleSearch():
         self.debug= debug
         self.display_puzzle_flag= display_puzzle_flag
         self.enable_trace= enable_trace
-        #self.initial= initial
         self.final= final
         self.search_param= search_param
 
@@ -21,7 +18,7 @@ class PuzzleSearch():
         print("mat_dim: ", self.mat_dim, self.puzzle)
 
     def display_puzzle(self,curr_state):
-        print("---------------------------")
+        print("--------------------------------")
         for i in range(self.mat_dim):
             if self.mat_dim==3:
                 print(f"  {curr_state[self.mat_dim*i]}   {curr_state[(self.mat_dim*i)+1]}   {curr_state[(self.mat_dim*i)+2]}   ")
@@ -50,8 +47,6 @@ class PuzzleSearch():
         return curr_state_list
 
     def get_neighbours(self, index):
-        #if self.debug:
-        #    print(f"get neigbours called... for element index at {index}")
         neighbour_list=[]
 
         if index-1 <=self.puzzle and index-1>=0 and (abs(((index-1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #left
@@ -69,11 +64,8 @@ class PuzzleSearch():
 
     def bfs(self, state, queue, org_pos, visited):
         while queue:
-            #print("queue: ", queue)
             pop_element= queue.pop()
             visited.append(pop_element[0])
-            #if self.debug:
-            #    print("Calling neigbours for index: ", pop_element[0])
 
             neighbors= self.get_neighbours(pop_element[0])
             for n in neighbors:
@@ -174,7 +166,7 @@ class PuzzleSearch():
                 if self.display_puzzle_flag:
                     self.display_puzzle(popped_node.state)
 
-            blank_index= popped_node.state.index(0)
+            blank_index= popped_node.state.index(0) #find index of blank tile
             neighbour_list= self.get_neighbours(blank_index)
 
             curr_state_list= self.next_move(neighbour_list, popped_node.state, blank_index)
@@ -213,7 +205,7 @@ class PuzzleSearch():
                 print("\n")
 
         print("Failure ! Couldn't find solution! ")
-        print("Expanded_nodes: ", expanded_nodes, "Depth reached: ", popped_node.g_n)
+        print("Expanded_nodes: ", expanded_nodes, "Depth reached: ", popped_node.depth)
         end_time=dt.now()
         print(f"Time elapsed: {(end_time-strt_time).total_seconds()} seconds ")
         print("\n")
@@ -229,7 +221,6 @@ class Node():
         self.f_n= self.g_n+self.h_n
 
     def __lt__(self, x):
-        #print("x: ", x.state, x.former.state, x.former.f_n)
         return self.f_n < self.former.f_n
 
 

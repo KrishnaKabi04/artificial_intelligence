@@ -4,7 +4,7 @@ from puzzle_search import PuzzleSearch
 
 depth_arg=None
 puzzle= eval(input("Which puzzle kind you want to solve (8/15/25) ? \n"\
-                    "Disclaimer! Only 8 and 15 puzzle has default examples. For 25 puzzle you have to enter manually! \n"\
+                    "Disclaimer! Only 8 and 15 puzzle have default examples. For 25 puzzle you have to enter manually! \n"\
                     "Enter 8 or 15 or 25: "))
 if puzzle not in [8,15,25]:
     print("Wrong choice! Exiting..!")
@@ -21,13 +21,13 @@ if problem not in [1,2]:
     exit()
 
 config = configparser.ConfigParser()
-config.read('./run_Samples.ini')
+config.read('./run_samples.ini')
 final=  eval(config.get('DEFAULT_'+str(puzzle),'final'))
 
 if int(problem)==1:
     if puzzle==8:
         depth_arg= eval(input("Enter a depth of solution among (2,4,8,12,16,20,24,31) to choose the puzzle or  "\
-                           "enter -1 to run for all configuration: "))
+                           "enter -1 to run for all default configurations: "))
         if depth_arg not in [-1,2,4,8,12,16,20,24,31]:
             print("Wrong choice! Exiting..!")
             exit()
@@ -35,7 +35,7 @@ if int(problem)==1:
             depth_list=[2,4,8,12,16,20,24,31]
     elif puzzle==15:
         depth_arg= eval(input("Enter a depth of solution among (7,10,12,15,25) to choose the puzzle or "\
-                           "enter -1 to run for all configuration: "))
+                           "enter -1 to run for all default configurations: "))
         if depth_arg not in [-1,7,10,12,15,25]:
             print("Wrong choice! Exiting..!")
             exit()
