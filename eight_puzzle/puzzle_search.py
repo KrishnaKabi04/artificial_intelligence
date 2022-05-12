@@ -229,7 +229,7 @@ class Node():
         self.h_n= h_n
         self.f_n= self.g_n+self.h_n
 
-    def __lt__(self,x):
+    def __lt__(self, x):
         #print("x: ", x.state, x.former.state, x.former.f_n)
         return self.f_n < self.former.f_n
 
@@ -246,7 +246,7 @@ obj= PuzzleSearch(final, limit, debug, display_puzzle_flag, enable_trace, search
 
 config = configparser.ConfigParser()
 config.read('./run_Samples.ini')
-for i in [31]: #2,4,8,12,16,20,24,
+for i in [24]: #2,4,8,12,16,20,24,
     initial= eval(config.get('DEFAULT_8','depth_'+str(i)))
     #initial= [0,7,2,4,6,1,3,5,8]
     print("Initial State: ")
