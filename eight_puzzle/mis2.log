@@ -1,0 +1,120 @@
+mat_dim:  3 8
+Initial State: 
+---------------------------
+  1   2   3   
+  4   5   6   
+  0   7   8   
+
+
+Initiating misplaced search...
+Sucess! at depth: 2
+Expanded_nodes:  2
+Largest size of queue was:  2
+Frontier nodes length:  2
+Time elapsed: 92.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   2   3   
+  5   0   6   
+  4   7   8   
+
+
+Initiating misplaced search...
+Sucess! at depth: 4
+Expanded_nodes:  4
+Largest size of queue was:  5
+Frontier nodes length:  5
+Time elapsed: 78.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   2   
+  4   7   8   
+
+
+Initiating misplaced search...
+Sucess! at depth: 8
+Expanded_nodes:  18
+Largest size of queue was:  15
+Frontier nodes length:  15
+Time elapsed: 171.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   7   
+  4   8   2   
+
+
+Initiating misplaced search...
+Sucess! at depth: 12
+Expanded_nodes:  119
+Largest size of queue was:  83
+Frontier nodes length:  83
+Time elapsed: 1.5 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  1   6   7   
+  5   0   3   
+  4   8   2   
+
+
+Initiating misplaced search...
+Sucess! at depth: 16
+Expanded_nodes:  618
+Largest size of queue was:  388
+Frontier nodes length:  388
+Time elapsed: 19.56 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  7   1   2   
+  4   8   5   
+  6   3   0   
+
+
+Initiating misplaced search...
+Sucess! at depth: 20
+Expanded_nodes:  2498
+Largest size of queue was:  1516
+Frontier nodes length:  1515
+Time elapsed: 279.91 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  0   7   2   
+  4   6   1   
+  3   5   8   
+
+
+Initiating misplaced search...
+Sucess! at depth: 24
+Expanded_nodes:  13612
+Largest size of queue was:  7087
+Frontier nodes length:  7086
+Time elapsed: 7.221725 seconds
+
+ 
+Initial State: 
+---------------------------
+  8   6   7   
+  2   5   4   
+  3   0   1   
+
+
+Initiating misplaced search...
+mean hip length:  24342
+expanded_nodes:  100000
+limit of 100000 iterations reached! Investigate ! Exiting...
+Time elapsed: 407.108748 seconds
+
+ 

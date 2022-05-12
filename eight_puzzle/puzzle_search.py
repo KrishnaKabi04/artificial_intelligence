@@ -3,24 +3,22 @@ import sys
 import math
 from heapq import heappush, heappop
 from datetime import datetime as dt
-from configparser import ConfigParser
-
+import configparser
 
 
 class PuzzleSearch():
-    def __init__(self, initial, final, limit, debug, display_puzzle_flag, enable_trace, search_param):
+    def __init__(self, final, limit, debug, display_puzzle_flag, enable_trace, search_param):
         self.limit=limit 
         self.debug= debug
         self.display_puzzle_flag= display_puzzle_flag
         self.enable_trace= enable_trace
-        self.initial= initial
+        #self.initial= initial
         self.final= final
         self.search_param= search_param
 
         self.puzzle= len(self.final)-1
         self.mat_dim= int(math.sqrt(self.puzzle+1))
         print("mat_dim: ", self.mat_dim, self.puzzle)
-        self.hist_state= []
 
     def display_puzzle(self,curr_state):
         print("---------------------------")
@@ -56,22 +54,23 @@ class PuzzleSearch():
         #    print(f"get neigbours called... for element index at {index}")
         neighbour_list=[]
 
-        if index+1 <=self.puzzle and (abs(((index+1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #for boundary condition mod operator
-            neighbour_list.append(int(index+1))
-        if index-1 <=self.puzzle and index-1>=0 and (abs(((index-1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1):
-            neighbour_list.append(int(index-1))
-        if index+self.mat_dim <=self.puzzle:
-            neighbour_list.append(int(index+self.mat_dim))
-        if index-self.mat_dim <=self.puzzle and index-self.mat_dim>=0:
+        if index-self.mat_dim <=self.puzzle and index-self.mat_dim>=0: #up
             neighbour_list.append(int(index-self.mat_dim))
+        if index+self.mat_dim <=self.puzzle: #down
+            neighbour_list.append(int(index+self.mat_dim))
+        if index-1 <=self.puzzle and index-1>=0 and (abs(((index-1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #left
+            neighbour_list.append(int(index-1))
+        if index+1 <=self.puzzle and (abs(((index+1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #for boundary condition mod operator (right)
+            neighbour_list.append(int(index+1))
 
-        if self.debug:
-            print(f"neighbour_list when target index is at {index}: is {neighbour_list}")
+        
+        #if self.debug:
+        #    print(f"neighbour_list when target index is at {index}: is {neighbour_list}")
         return neighbour_list
 
     def bfs(self, state, queue, org_pos, visited):
         while queue:
-            print("queue: ", queue)
+            #print("queue: ", queue)
             pop_element= queue.pop()
             visited.append(pop_element[0])
             #if self.debug:
@@ -119,7 +118,10 @@ class PuzzleSearch():
 
                 #if self.debug:
                 #    print(f"calling bfs for element: {x} at index: {curr_pos}")
-                tot_h_n+= self.bfs(state, queue, org_pos, visited)
+                cost= self.bfs(state, queue, org_pos, visited)
+                if debug:
+                    print(f"cost of {x} = {cost}")
+                tot_h_n+= cost
 
             if self.debug:
                 print("self.final tot_h_n: ", tot_h_n)
@@ -130,18 +132,19 @@ class PuzzleSearch():
         return None
 
     #heapify the state
-    def render_state(self):
+    def render_state(self,initial):
+        self.hist_state= []
         strt_time= dt.now()
         expanded_nodes=0
         heap_min=[]
 
-        if self.initial==self.final:
+        if initial==self.final:
             print("Success! at depth: 0")
             return 
 
-        h_n= self.cal_h_n(self.initial)
-        old_state= Node(self.initial, 0, 0, 0, h_n)
-        self.hist_state.append(self.initial)
+        h_n= self.cal_h_n(initial)
+        old_state= Node(initial, 0, 0, 0, h_n)
+        self.hist_state.append(initial)
         heappush(heap_min, (old_state.f_n, old_state)) #sort by minimum f_n
         largest_size= 1
 
@@ -151,6 +154,8 @@ class PuzzleSearch():
 
             min_cost, popped_node= heappop(heap_min)
             expanded_nodes+=1
+            #if expanded_nodes%1000==0:
+            #    print("Current: ", expanded_nodes)
 
             if self.enable_trace:
                 print(f"The best state expanded with g_n {popped_node.g_n}, h_n {popped_node.h_n} and f_n {popped_node.f_n} is: ")
@@ -159,7 +164,7 @@ class PuzzleSearch():
             if expanded_nodes==self.limit:
                 print("mean hip length: ", len(heap_min))
                 print("expanded_nodes: ", expanded_nodes)
-                print(f"limit of {self.limit} reached! investigate ! Exiting...")
+                print(f"limit of {self.limit} iterations reached! Investigate ! Exiting...")
                 end_time=dt.now()
                 print(f"Time elapsed: {(end_time-strt_time).total_seconds()} seconds")
                 return
@@ -181,16 +186,22 @@ class PuzzleSearch():
                     print("Largest size of queue was: ", largest_size) #in slides: it adds 1 if the result node is pushed to queue too. HEre, it's checked first before pushing
                     print("Frontier nodes length: ", len(heap_min))
                     end_time=dt.now()
-                    print(f"Time elapsed: {(end_time-strt_time).total_seconds()} seconds")
+                    delta= (end_time-strt_time).total_seconds()
+                    if delta < 1e-3:
+                        delta= round(delta*(1000**2),2)
+                        print(f"Time elapsed: {delta} microseconds")
+                        return
+                    if delta < 1:
+                        delta= round(delta*(1000),2)
+                        print(f"Time elapsed: {delta} milliseconds")
+                        return
+                    print(f"Time elapsed: {delta} seconds")
                     return 
 
                 if self.debug and self.display_puzzle_flag:
                     self.display_puzzle(node)
 
                 h_n= self.cal_h_n(node)
-                #if self.search_param=="hill":
-                #    curr_state=  Node(node, popped_node, popped_node.depth+1, 0 ,h_n)
-                #else:
 
                 curr_state=  Node(node, popped_node, popped_node.depth+1, popped_node.g_n+1 ,h_n)
 
@@ -209,9 +220,6 @@ class PuzzleSearch():
         print("\n")
         return 
 
-
-
-
 class Node():
     def __init__(self, state, former, depth, path_cost, h_n):
         self.state= state
@@ -221,25 +229,33 @@ class Node():
         self.h_n= h_n
         self.f_n= self.g_n+self.h_n
 
-    def __lt__(self, x):
-        return self.f_n <= self.former.f_n
+    def __lt__(self,x):
+        #print("x: ", x.state, x.former.state, x.former.f_n)
+        return self.f_n < self.former.f_n
 
 
 
+final= [1,2,3,4,5,6,7,8,0]
+limit=50000
+debug=False
+display_puzzle_flag=True
+enable_trace=False
+search_param= "misplaced" #manhattan, misplaced, UCS
+
+obj= PuzzleSearch(final, limit, debug, display_puzzle_flag, enable_trace, search_param)
+
+config = configparser.ConfigParser()
+config.read('./run_Samples.ini')
+for i in [31]: #2,4,8,12,16,20,24,
+    initial= eval(config.get('DEFAULT_8','depth_'+str(i)))
+    #initial= [0,7,2,4,6,1,3,5,8]
+    print("Initial State: ")
+    obj.display_puzzle(initial)
+    print(f"Initiating {search_param} search...")
+    obj.render_state(initial)
+    print("\n ")
 
 
-
-
-
-
-
-
-    
-
-
-
-
-    
 
 
 

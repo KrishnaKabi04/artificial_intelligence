@@ -1,0 +1,121 @@
+mat_dim:  3 8
+Initial State: 
+---------------------------
+  1   2   3   
+  4   5   6   
+  0   7   8   
+
+
+Initiating manhattan search...
+Sucess! at depth: 2
+Expanded_nodes:  2
+Largest size of queue was:  2
+Frontier nodes length:  2
+Time elapsed: 120.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   2   3   
+  5   0   6   
+  4   7   8   
+
+
+Initiating manhattan search...
+Sucess! at depth: 4
+Expanded_nodes:  4
+Largest size of queue was:  5
+Frontier nodes length:  5
+Time elapsed: 142.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   2   
+  4   7   8   
+
+
+Initiating manhattan search...
+Sucess! at depth: 8
+Expanded_nodes:  12
+Largest size of queue was:  11
+Frontier nodes length:  11
+Time elapsed: 383.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   7   
+  4   8   2   
+
+
+Initiating manhattan search...
+Sucess! at depth: 12
+Expanded_nodes:  36
+Largest size of queue was:  27
+Frontier nodes length:  27
+Time elapsed: 1.37 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  1   6   7   
+  5   0   3   
+  4   8   2   
+
+
+Initiating manhattan search...
+Sucess! at depth: 18
+Expanded_nodes:  194
+Largest size of queue was:  132
+Frontier nodes length:  132
+Time elapsed: 10.23 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  7   1   2   
+  4   8   5   
+  6   3   0   
+
+
+Initiating manhattan search...
+Sucess! at depth: 20
+Expanded_nodes:  383
+Largest size of queue was:  254
+Frontier nodes length:  253
+Time elapsed: 21.43 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  0   7   2   
+  4   6   1   
+  3   5   8   
+
+
+Initiating manhattan search...
+Sucess! at depth: 24
+Expanded_nodes:  1576
+Largest size of queue was:  890
+Frontier nodes length:  888
+Time elapsed: 179.44 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  8   6   7   
+  2   5   4   
+  3   0   1   
+
+
+Initiating manhattan search...
+Sucess! at depth: 31
+Expanded_nodes:  6782
+Largest size of queue was:  3643
+Frontier nodes length:  3642
+Time elapsed: 2.205209 seconds
+
+ 
