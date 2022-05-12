@@ -11,7 +11,7 @@ Sucess! at depth: 2
 Expanded_nodes:  2
 Largest size of queue was:  2
 Frontier nodes length:  2
-Time elapsed: 92.0 microseconds
+Time elapsed: 109.0 microseconds
 
  
 Initial State: 
@@ -26,7 +26,7 @@ Sucess! at depth: 4
 Expanded_nodes:  4
 Largest size of queue was:  5
 Frontier nodes length:  5
-Time elapsed: 78.0 microseconds
+Time elapsed: 79.0 microseconds
 
  
 Initial State: 
@@ -41,7 +41,7 @@ Sucess! at depth: 8
 Expanded_nodes:  18
 Largest size of queue was:  15
 Frontier nodes length:  15
-Time elapsed: 171.0 microseconds
+Time elapsed: 193.0 microseconds
 
  
 Initial State: 
@@ -56,7 +56,7 @@ Sucess! at depth: 12
 Expanded_nodes:  119
 Largest size of queue was:  83
 Frontier nodes length:  83
-Time elapsed: 1.5 milliseconds
+Time elapsed: 1.51 milliseconds
 
  
 Initial State: 
@@ -68,10 +68,10 @@ Initial State:
 
 Initiating misplaced search...
 Sucess! at depth: 16
-Expanded_nodes:  618
-Largest size of queue was:  388
-Frontier nodes length:  388
-Time elapsed: 19.56 milliseconds
+Expanded_nodes:  657
+Largest size of queue was:  411
+Frontier nodes length:  411
+Time elapsed: 22.59 milliseconds
 
  
 Initial State: 
@@ -83,10 +83,10 @@ Initial State:
 
 Initiating misplaced search...
 Sucess! at depth: 20
-Expanded_nodes:  2498
-Largest size of queue was:  1516
-Frontier nodes length:  1515
-Time elapsed: 279.91 milliseconds
+Expanded_nodes:  2703
+Largest size of queue was:  1610
+Frontier nodes length:  1609
+Time elapsed: 326.24 milliseconds
 
  
 Initial State: 
@@ -98,23 +98,9 @@ Initial State:
 
 Initiating misplaced search...
 Sucess! at depth: 24
-Expanded_nodes:  13612
-Largest size of queue was:  7087
-Frontier nodes length:  7086
-Time elapsed: 7.221725 seconds
-
- 
-Initial State: 
----------------------------
-  8   6   7   
-  2   5   4   
-  3   0   1   
-
-
-Initiating misplaced search...
-mean hip length:  24342
-expanded_nodes:  100000
-limit of 100000 iterations reached! Investigate ! Exiting...
-Time elapsed: 407.108748 seconds
+Expanded_nodes:  13621
+Largest size of queue was:  7035
+Frontier nodes length:  7035
+Time elapsed: 7.357469 seconds
 
  

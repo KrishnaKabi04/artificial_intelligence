@@ -10,8 +10,8 @@ Initiating manhattan search...
 Sucess! at depth: 2
 Expanded_nodes:  2
 Largest size of queue was:  2
-Frontier nodes length:  2
-Time elapsed: 120.0 microseconds
+Frontier nodes length:  1
+Time elapsed: 107.0 microseconds
 
  
 Initial State: 
@@ -25,8 +25,8 @@ Initiating manhattan search...
 Sucess! at depth: 4
 Expanded_nodes:  4
 Largest size of queue was:  5
-Frontier nodes length:  5
-Time elapsed: 142.0 microseconds
+Frontier nodes length:  4
+Time elapsed: 136.0 microseconds
 
  
 Initial State: 
@@ -40,8 +40,8 @@ Initiating manhattan search...
 Sucess! at depth: 8
 Expanded_nodes:  12
 Largest size of queue was:  11
-Frontier nodes length:  11
-Time elapsed: 383.0 microseconds
+Frontier nodes length:  10
+Time elapsed: 349.0 microseconds
 
  
 Initial State: 
@@ -53,10 +53,10 @@ Initial State:
 
 Initiating manhattan search...
 Sucess! at depth: 12
-Expanded_nodes:  36
-Largest size of queue was:  27
-Frontier nodes length:  27
-Time elapsed: 1.37 milliseconds
+Expanded_nodes:  31
+Largest size of queue was:  25
+Frontier nodes length:  24
+Time elapsed: 1.17 milliseconds
 
  
 Initial State: 
@@ -68,10 +68,10 @@ Initial State:
 
 Initiating manhattan search...
 Sucess! at depth: 18
-Expanded_nodes:  194
-Largest size of queue was:  132
-Frontier nodes length:  132
-Time elapsed: 10.23 milliseconds
+Expanded_nodes:  160
+Largest size of queue was:  108
+Frontier nodes length:  107
+Time elapsed: 8.03 milliseconds
 
  
 Initial State: 
@@ -83,10 +83,10 @@ Initial State:
 
 Initiating manhattan search...
 Sucess! at depth: 20
-Expanded_nodes:  383
-Largest size of queue was:  254
-Frontier nodes length:  253
-Time elapsed: 21.43 milliseconds
+Expanded_nodes:  371
+Largest size of queue was:  235
+Frontier nodes length:  235
+Time elapsed: 19.75 milliseconds
 
  
 Initial State: 
@@ -98,10 +98,10 @@ Initial State:
 
 Initiating manhattan search...
 Sucess! at depth: 24
-Expanded_nodes:  1576
-Largest size of queue was:  890
-Frontier nodes length:  888
-Time elapsed: 179.44 milliseconds
+Expanded_nodes:  1567
+Largest size of queue was:  891
+Frontier nodes length:  891
+Time elapsed: 172.35 milliseconds
 
  
 Initial State: 
@@ -113,9 +113,9 @@ Initial State:
 
 Initiating manhattan search...
 Sucess! at depth: 31
-Expanded_nodes:  6782
-Largest size of queue was:  3643
-Frontier nodes length:  3642
-Time elapsed: 2.205209 seconds
+Expanded_nodes:  7615
+Largest size of queue was:  3976
+Frontier nodes length:  3975
+Time elapsed: 2.78 seconds
 
  

@@ -54,15 +54,14 @@ class PuzzleSearch():
         #    print(f"get neigbours called... for element index at {index}")
         neighbour_list=[]
 
-        if index-self.mat_dim <=self.puzzle and index-self.mat_dim>=0: #up
-            neighbour_list.append(int(index-self.mat_dim))
-        if index+self.mat_dim <=self.puzzle: #down
-            neighbour_list.append(int(index+self.mat_dim))
         if index-1 <=self.puzzle and index-1>=0 and (abs(((index-1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #left
             neighbour_list.append(int(index-1))
         if index+1 <=self.puzzle and (abs(((index+1)%self.mat_dim)-((index)%self.mat_dim)) != self.mat_dim-1): #for boundary condition mod operator (right)
             neighbour_list.append(int(index+1))
-
+        if index-self.mat_dim <=self.puzzle and index-self.mat_dim>=0: #up
+            neighbour_list.append(int(index-self.mat_dim))
+        if index+self.mat_dim <=self.puzzle: #down
+            neighbour_list.append(int(index+self.mat_dim))
         
         #if self.debug:
         #    print(f"neighbour_list when target index is at {index}: is {neighbour_list}")
@@ -119,7 +118,7 @@ class PuzzleSearch():
                 #if self.debug:
                 #    print(f"calling bfs for element: {x} at index: {curr_pos}")
                 cost= self.bfs(state, queue, org_pos, visited)
-                if debug:
+                if self.debug:
                     print(f"cost of {x} = {cost}")
                 tot_h_n+= cost
 
@@ -195,7 +194,7 @@ class PuzzleSearch():
                         delta= round(delta*(1000),2)
                         print(f"Time elapsed: {delta} milliseconds")
                         return
-                    print(f"Time elapsed: {delta} seconds")
+                    print(f"Time elapsed: {round(delta,2)} seconds")
                     return 
 
                 if self.debug and self.display_puzzle_flag:
@@ -235,25 +234,25 @@ class Node():
 
 
 
-final= [1,2,3,4,5,6,7,8,0]
-limit=50000
-debug=False
-display_puzzle_flag=True
-enable_trace=False
-search_param= "misplaced" #manhattan, misplaced, UCS
-
-obj= PuzzleSearch(final, limit, debug, display_puzzle_flag, enable_trace, search_param)
-
-config = configparser.ConfigParser()
-config.read('./run_Samples.ini')
-for i in [24]: #2,4,8,12,16,20,24,
-    initial= eval(config.get('DEFAULT_8','depth_'+str(i)))
-    #initial= [0,7,2,4,6,1,3,5,8]
-    print("Initial State: ")
-    obj.display_puzzle(initial)
-    print(f"Initiating {search_param} search...")
-    obj.render_state(initial)
-    print("\n ")
+#final= [1,2,3,4,5,6,7,8,0]
+#limit=100000
+#debug=False
+#display_puzzle_flag=True
+#enable_trace=False
+#search_param= "UCS" #manhattan, misplaced, UCS
+#
+#obj= PuzzleSearch(final, limit, debug, display_puzzle_flag, enable_trace, search_param)
+#
+#config = configparser.ConfigParser()
+#config.read('./run_Samples.ini')
+#for i in [24,31]:
+#    initial= eval(config.get('DEFAULT_8','depth_'+str(i)))
+#    #initial= [0,7,2,4,6,1,3,5,8]
+#    print("Initial State: ")
+#    obj.display_puzzle(initial)
+#    print(f"Initiating {search_param} search...")
+#    obj.render_state(initial)
+#    print("\n ")
 
 
 

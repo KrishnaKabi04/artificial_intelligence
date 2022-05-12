@@ -1,0 +1,112 @@
+mat_dim:  3 8
+Initial State: 
+---------------------------
+  1   2   3   
+  4   5   6   
+  0   7   8   
+
+
+Initiating UCS search...
+Sucess! at depth: 2
+Expanded_nodes:  3
+Largest size of queue was:  3
+Frontier nodes length:  3
+Time elapsed: 76.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   2   3   
+  5   0   6   
+  4   7   8   
+
+
+Initiating UCS search...
+Sucess! at depth: 4
+Expanded_nodes:  16
+Largest size of queue was:  10
+Frontier nodes length:  10
+Time elapsed: 84.0 microseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   2   
+  4   7   8   
+
+
+Initiating UCS search...
+Sucess! at depth: 8
+Expanded_nodes:  172
+Largest size of queue was:  110
+Frontier nodes length:  109
+Time elapsed: 2.08 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  1   3   6   
+  5   0   7   
+  4   8   2   
+
+
+Initiating UCS search...
+Sucess! at depth: 12
+Expanded_nodes:  1295
+Largest size of queue was:  852
+Frontier nodes length:  851
+Time elapsed: 76.45 milliseconds
+
+ 
+Initial State: 
+---------------------------
+  1   6   7   
+  5   0   3   
+  4   8   2   
+
+
+Initiating UCS search...
+Sucess! at depth: 16
+Expanded_nodes:  8554
+Largest size of queue was:  5083
+Frontier nodes length:  5082
+Time elapsed: 2.961604 seconds
+
+ 
+Initial State: 
+---------------------------
+  7   1   2   
+  4   8   5   
+  6   3   0   
+
+
+Initiating UCS search...
+Sucess! at depth: 20
+Expanded_nodes:  36457
+Largest size of queue was:  16446
+Frontier nodes length:  16445
+Time elapsed: 54.455737 seconds
+
+
+Initial State: 
+---------------------------
+  0   7   2   
+  4   6   1   
+  3   5   8     
+
+
+Sucess! at depth: 24
+Expanded_nodes:  98813
+Largest size of queue was:  24188
+Frontier nodes length:  21223
+Time elapsed: 1175.623126 seconds
+
+
+Initial State: 
+---------------------------
+  8   6   7   
+  2   5   4   
+  3   0   1  
+
+
