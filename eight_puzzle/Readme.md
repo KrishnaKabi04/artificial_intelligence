@@ -5,11 +5,13 @@
     3. A star search using manhattan distance heuristic
 
 
+
 The search_wrapper.py can be used to call the main script puzzle_search. 
 Following parameters can be modified in config file **"run_samples.ini"**
 
-    **limit**: Number of iterations to run before declaring failure \n
-    **enable_trace**: Enable trace if need to view every node expanded through the course of search.
+    limit: Number of iterations to run before declaring failure
+    enable_trace: Enable trace if need to view every node expanded through the course of search.
+
 
 
 The **run_samples.ini** can be used for default puzzle of 8 and 15 kind. For now, the wrapper scipt can handle till 25 puzzle.
