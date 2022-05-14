@@ -15,7 +15,7 @@ class PuzzleSearch():
 
         self.puzzle= len(self.final)-1
         self.mat_dim= int(math.sqrt(self.puzzle+1))
-        print("mat_dim: ", self.mat_dim, self.puzzle)
+        #print("mat_dim: ", self.mat_dim, self.puzzle)
 
     def display_puzzle(self,curr_state):
         print("--------------------------------")
@@ -229,14 +229,14 @@ class Node():
 #limit=100000
 #debug=False
 #display_puzzle_flag=True
-#enable_trace=False
+#enable_trace=True
 #search_param= "UCS" #manhattan, misplaced, UCS
-#
+##
 #obj= PuzzleSearch(final, limit, debug, display_puzzle_flag, enable_trace, search_param)
-#
+##
 #config = configparser.ConfigParser()
 #config.read('./run_Samples.ini')
-#for i in [24,31]:
+#for i in [8]:
 #    initial= eval(config.get('DEFAULT_8','depth_'+str(i)))
 #    #initial= [0,7,2,4,6,1,3,5,8]
 #    print("Initial State: ")

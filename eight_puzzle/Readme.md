@@ -6,7 +6,7 @@
 
 
 
-The search_wrapper.py can be used to call the main script puzzle_search. 
+The search_wrapper.py can be used to call the main script puzzle_search. \n
 Following parameters can be modified in config file **"run_samples.ini"**
 
     limit: Number of iterations to run before declaring failure
@@ -14,5 +14,5 @@ Following parameters can be modified in config file **"run_samples.ini"**
 
 
 
-The **run_samples.ini** can be used for default puzzle of 8 and 15 kind. For now, the wrapper scipt can handle till 25 puzzle.
+The **run_samples.ini** can be used for default puzzle samples of 8 and 15 kind. For now, the wrapper scipt can handle till 25 puzzle.
 To test for any higher version requires adding final state of that kind to config file and changing the wrapper script.
