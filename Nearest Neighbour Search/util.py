@@ -89,7 +89,7 @@ def forward_selection(df):
     return
 
 
-def backward_selection(df):
+def backward_elimination(df):
     #backward
     best_acc= 0
     best_features= []

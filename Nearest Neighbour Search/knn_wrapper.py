@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from util import forward_selection, backward_selection, parse
+from util import forward_selection, backward_elimination, parse
 
 with open("../../Project 2/CS205_SP_2022_SMALLtestdata__44.txt", "r") as file:
     data= file.readlines()
@@ -60,13 +60,13 @@ if dataset==1:
     if algorithm==1:
         forward_selection(small_df)
     else:
-        backward_selection(small_df)
+        backward_elimination(small_df)
 else:
     print("Baseline accuracy for Large dataset: ", lg_base_line_acc)
     if algorithm==1:
         forward_selection(large_df)
     else:
-        backward_selection(large_df)
+        backward_elimination(large_df)
 
 
 
