@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from util import forward_selection, backward_elimination, parse
 
-with open("../../Project 2/CS205_SP_2022_SMALLtestdata__44.txt", "r") as file:
+with open("../../Project 2/ai_knn_dataset/CS205_SP_2022_SMALLtestdata__44.txt", "r") as file:
     data= file.readlines()
 
 rows= parse(data)
@@ -20,7 +20,7 @@ freq_count= dict(small_df['target'].value_counts(ascending=False))
 #for every test point: assign label as the most frequent class in train data
 sm_base_line_acc= np.round(list(freq_count.values())[0]/len(small_df), 3)
 
-with open("../../Project 2/CS205_SP_2022_SMALLtestdata__44.txt", "r") as file:
+with open("../../Project 2/ai_knn_dataset/CS205_SP_2022_Largetestdata__15.txt", "r") as file:
     data= file.readlines()
 
 rows= parse(data)
