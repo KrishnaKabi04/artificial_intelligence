@@ -56,13 +56,15 @@ else:
     print("Initiating Backward Selection")
 
 if dataset==1:
-    print("Baseline accuracy for Small dataset: ", sm_base_line_acc)
+    print("Baseline accuracy or default rate for Small dataset: ", sm_base_line_acc, "\n")
+    print(f"This dataset has {small_df.shape[1]-1} features (excluding target variable) with {small_df.shape[0]} instances")
     if algorithm==1:
         forward_selection(small_df)
     else:
         backward_elimination(small_df)
 else:
-    print("Baseline accuracy for Large dataset: ", lg_base_line_acc)
+    print("Baseline accuracy or default rate for Large dataset: ", lg_base_line_acc, "\n")
+    print(f"This dataset has {large_df.shape[1]-1} features (excluding target variable) with {large_df.shape[0]} instances")
     if algorithm==1:
         forward_selection(large_df)
     else:
