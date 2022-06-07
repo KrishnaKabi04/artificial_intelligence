@@ -1,0 +1,13 @@
+Initiating Forward Selection
+Baseline accuracy or default rate for Large dataset:  0.812 
+
+This dataset has 40 features (excluding target variable) with 1000 instances
+Iteration: 1 :: current feature list []
+Best feature for current iteration is: 9 and highest accuracy achieved is: 0.838
+Best_features till now: [9], Best_accuracy till now: 0.838
+
+Iteration: 2 :: current feature list [9]
+Best feature for current iteration is: 20 and highest accuracy achieved is: 0.971
+Best_features till now: [9, 20], Best_accuracy till now: 0.971
+
+Iteration: 3 :: current feature list [9, 20]

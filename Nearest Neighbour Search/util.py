@@ -17,10 +17,6 @@ def parse(data):
 def compute_dist(test_pt, train_pt):
     dist_mat= np.round(math.sqrt(np.sum(np.abs(train_pt-test_pt)**2)), 3)
     return dist_mat
-    
-import numpy as np
-import pandas as pd
-import math
 
 
 def parse(data):
@@ -35,20 +31,17 @@ def parse(data):
 
 
 def compute_dist(test_pt, train_pt):
-    dist_mat= np.round(math.sqrt(np.sum(np.abs(train_pt-test_pt)**2)), 3)
+    dist_mat= np.round(np.sqrt(np.sum(np.abs(train_pt-test_pt)**2, 1)), 3)
     return dist_mat
     
 def knn_classifier(test_data, training_data, training_labels, K=1):
+    #K value unused. Could be extended for K>1
     pred_labels = np.zeros(len(test_data))
-    #print("pred_labels: ", pred_labels)
 
     all_dists = np.zeros(len(training_data))
-        #print("all_dists: ", all_dists.shape)
-    count = 0
-    for train_pt in training_data: #for every row in train data
-        all_dists[count] = compute_dist(test_data, train_pt)
-        #print(all_dists[count])
-        count = count+1
+
+    #for train_pt in training_data: #for every row in train data
+    all_dists = compute_dist(test_data, training_data)
     
     sorted_indices = np.argsort(all_dists)
     pred_labels = training_labels[sorted_indices[0]]
@@ -57,12 +50,9 @@ def knn_classifier(test_data, training_data, training_labels, K=1):
 
 # split data based on Leave out one cross validation
 def loov(features_list, df):
-    #print("features_list: ", features_list)
-    
+
     all_accuracy= []
     for i in range(len(df)):
-        #if i==10:
-        #    return np.round(np.array(all_accuracy).mean(),3)
         
         #train-test split
         test_df= df.iloc[[i, ]]
@@ -72,10 +62,8 @@ def loov(features_list, df):
 
         pred_labels = knn_classifier(X_test.values, X_train.values, y_train.values, 1)
         accuracy = sum(y_test.values == pred_labels)
-        #print(pred_labels, y_test.values, accuracy, len(pred_labels))
         all_accuracy.append(accuracy)
 
-    #print("all_accuracy: ", all_accuracy)
     return np.round(np.array(all_accuracy).mean(),3)
 
 
@@ -96,7 +84,7 @@ def forward_selection(df):
         for feat in org_cols_list: #what features
             if feat not in feat_list:
                 acc= loov(feat_list+[feat], df)
-                print(f"Using features {feat_list+[feat]} accuracy is: {acc}")
+                #print(f"Using features {feat_list+[feat]} accuracy is: {acc}")
                 features_acc[feat]= acc
                 ctr+=1
 
@@ -138,7 +126,7 @@ def backward_elimination(df):
             for idx in range(len(feat_list)): #what features
                 copy_feat_list= feat_list[:idx]+feat_list[idx+1:]#.remove(idx)
                 acc= loov(copy_feat_list, df) #interpret as: all exisiting features w/o feat
-                print(f"Removing feature {feat_list[idx]} accuracy is: {acc}")
+                #print(f"Removing feature {feat_list[idx]} accuracy is: {acc}")
                 features_acc[feat_list[idx]]= acc
 
             #calc best accuracy: eliminate feature that had least drop in accuracy: meaning less important feature. If biggest drop in accuracy: more imp feature
@@ -157,3 +145,5 @@ def backward_elimination(df):
         print(f"Best_features till now: {best_features}, Best_accuracy till now: {best_acc}")
         print()
     return
+
+
