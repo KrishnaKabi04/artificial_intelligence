@@ -40,19 +40,16 @@ lg_base_line_acc= np.round(list(freq_count.values())[0]/len(large_df), 3)
 
 
 #User Input
-#dataset = int(input("\nInput 1 for small dataset and 2 for large dataset: "))
-#if dataset not in [1,2]:
-#    print("Wrong choice! Exiting..!")
-#    exit()
-#
-#algorithm = int(input("Input 1 for forward selection, 2 for backward elimination: "))
-#if algorithm not in [1,2]:
-#    print("Wrong choice! Exiting..!")
-#    exit()
-#
+dataset = int(input("\nInput 1 for small dataset and 2 for large dataset: "))
+if dataset not in [1,2]:
+    print("Wrong choice! Exiting..!")
+    exit()
 
-algorithm=2
-dataset=2
+algorithm = int(input("Input 1 for forward selection, 2 for backward elimination: "))
+if algorithm not in [1,2]:
+    print("Wrong choice! Exiting..!")
+    exit()
+
 
 if algorithm==1:
     print("Initiating Forward Selection")
